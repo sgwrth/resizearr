@@ -3,37 +3,48 @@
 
 typedef int *Intarray;
 
-int *createintarray();
-void initarrayvalues(int *array);
-int *push(int valuetoadd, int *array);
-void printintarray(int *array);
+Intarray createintarray();
+void initarrayvalues(Intarray array);
+Intarray push(int valuetoadd, Intarray array);
+Intarray pop(int index, Intarray array);
+void printintarray(Intarray array);
 
 int main(int argc, int **argv)
 {
   Intarray intarray = createintarray();
 	printintarray(intarray);
 
-	intarray = push(1, intarray);
-  printf("pushed 1 to array:\n");
+  printf("enter value to push to array: ");
+  int valuetopush = 0;
+  scanf("%d", &valuetopush);
+	intarray = push(valuetopush, intarray);
+  printf("pushed %d to array:\n", valuetopush);
 	printintarray(intarray);
+  
+  printf("enter index of value to pop from array: ");
+  int indextopop = 0;
+  scanf("%d", &indextopop);
+  intarray = pop(indextopop, intarray);
+  printf("popped value at [%d]:\n", indextopop);
+  printintarray(intarray);
 
+  free(intarray);
 	return 0;
 }
 
-int *createintarray()
+Intarray createintarray()
 {
   int size = 0;
 	printf("enter size of int array: ");
 	scanf("%d", &size);
-	printf("size: %d\n", size);
 
-	int *array = (int*)malloc(sizeof(int) * (size + 1));
+	Intarray array = (int*)malloc(sizeof(int) * (size + 1));
   array[0] = size; /* storing size info */
   initarrayvalues(array);
 	return array;
 }
 
-void initarrayvalues(int *array)
+void initarrayvalues(Intarray array)
 {
 	for (int i = 1; i <= array[0]; i++) {
 		int inputvalue = 0;
@@ -43,11 +54,11 @@ void initarrayvalues(int *array)
 	}
 }
 
-int *push(int valuetoadd, int *array)
+Intarray push(int valuetoadd, Intarray array)
 {
   int oldsize = array[0];
   int newsize = oldsize + 1;
-	int *newarray = (int*)malloc(sizeof(int) * (oldsize + 1));
+	Intarray newarray = (int*)malloc(sizeof(int) * newsize);
   newarray[0] = newsize;
 	int i = 1;
 	while (i < newsize) {
@@ -59,7 +70,26 @@ int *push(int valuetoadd, int *array)
 	return newarray;
 }
 
-void printintarray(int *array)
+Intarray pop(int index, Intarray array)
+{
+  int oldsize = array[0];
+  int newsize = oldsize - 1;
+  Intarray newarray = (int*)malloc(sizeof(int) * newsize);
+  newarray[0] = newsize;
+  int i = 1;
+  while (i <= index) {
+    newarray[i] = array[i];
+    i++;
+  }
+  while (i <= newarray[0]) {
+    newarray[i] = array[i + 1];
+    i++;
+  }
+  free(array);
+  return newarray;
+}
+
+void printintarray(Intarray array)
 {
 	for (int i = 1; i <= array[0]; i++) {
 		printf("value at [%d]: %d\n", i - 1, array[i]);
