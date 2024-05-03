@@ -1,31 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int *createintarray(int size);
+typedef int *Intarray;
+
+int *createintarray();
 void initarrayvalues(int *array);
 int *push(int valuetoadd, int *array);
-void printarray(int *array);
+void printintarray(int *array);
 
 int main(int argc, int **argv)
 {
-  int size = 0;
-	printf("enter size of int array: \n");
-	scanf("%d", &size);
-	printf("size: %d\n", size);
-
-	int *intarray = createintarray(size);
-
-	printarray(intarray);
+  Intarray intarray = createintarray();
+	printintarray(intarray);
 
 	intarray = push(1, intarray);
-
-	printarray(intarray);
+  printf("pushed 1 to array:\n");
+	printintarray(intarray);
 
 	return 0;
 }
 
-int *createintarray(int size)
+int *createintarray()
 {
+  int size = 0;
+	printf("enter size of int array: ");
+	scanf("%d", &size);
+	printf("size: %d\n", size);
+
 	int *array = (int*)malloc(sizeof(int) * (size + 1));
   array[0] = size; /* storing size info */
   initarrayvalues(array);
@@ -58,7 +59,7 @@ int *push(int valuetoadd, int *array)
 	return newarray;
 }
 
-void printarray(int *array)
+void printintarray(int *array)
 {
 	for (int i = 1; i <= array[0]; i++) {
 		printf("value at [%d]: %d\n", i - 1, array[i]);
