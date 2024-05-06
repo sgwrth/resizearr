@@ -10,6 +10,7 @@ Intarray push(int valuetoadd, Intarray array);
 Intarray pop(int index, Intarray array);
 void printintarray(Intarray array);
 int getintarraysize(Intarray array);
+Intarray pushmultiple(int valuestoadd[], Intarray array);
 
 int main(int argc, int **argv)
 {
@@ -30,6 +31,15 @@ int main(int argc, int **argv)
 	printf("popped value at [%d]:\n", indextopop);
 	printintarray(intarray);
 
+	printf("push multiple values:\n");
+  Intarray values = createintarray();
+  printintarray(values);
+
+  printf("adding multiple values\n");
+	intarray = pushmultiple(values, intarray);
+	printintarray(intarray);
+
+  free(--values);
 	free(--intarray);
 	return 0;
 }
@@ -104,4 +114,14 @@ void printintarray(Intarray array)
 int getintarraysize(Intarray array)
 {
 	return *(array - 1);
+}
+
+Intarray pushmultiple(Intarray valuestoadd, Intarray array)
+{
+	int numberofvalues = getintarraysize(valuestoadd);
+	printf("number of values to add: %d\n", numberofvalues);
+	for (int i = 0; i < numberofvalues ; i++) {
+		array = push(valuestoadd[i], array);
+	}
+	return array;
 }
