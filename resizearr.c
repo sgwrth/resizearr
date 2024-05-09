@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 Intarray createintarray()
 {
 	int arraysize = promptforsize();
-	Intarray array = (int*)malloc(sizeof(int) * (size + 1));
+	Intarray array = (int*)malloc(sizeof(int) * (arraysize + 1));
 	array[0] = arraysize;		/* storing size info */
 	initarrayvalues(++array);	/* shifting pointer to element [1] */
 	return array;
