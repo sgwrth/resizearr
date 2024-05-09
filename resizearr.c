@@ -11,44 +11,45 @@ Intarray pop(int index, Intarray array);
 void printintarray(Intarray array);
 int getintarraysize(Intarray array);
 Intarray pushmultiple(int valuestoadd[], Intarray array);
+void destroy(Intarray array);
 
-int main(int argc, int **argv)
+int main(int argc, char **argv)
 {
 	Intarray intarray = createintarray();
 	printintarray(intarray);
 
 	printf("enter value to push to array: ");
-	int valuetopush = 0;
+	int valuetopush;
 	scanf("%d", &valuetopush);
 	intarray = push(valuetopush, intarray);
 	printf("pushed %d to array:\n", valuetopush);
 	printintarray(intarray);
   
 	printf("enter index of value to pop from array: ");
-	int indextopop = 0;
+	int indextopop;
 	scanf("%d", &indextopop);
 	intarray = pop(indextopop, intarray);
 	printf("popped value at [%d]:\n", indextopop);
 	printintarray(intarray);
 
 	printf("push multiple values:\n");
-  Intarray values = createintarray();
-  printintarray(values);
+	Intarray values = createintarray();
+	printintarray(values);
 
-  printf("adding multiple values\n");
+	printf("adding multiple values\n");
 	intarray = pushmultiple(values, intarray);
 	printintarray(intarray);
 
-  free(--values);
-	free(--intarray);
+	destroy(values);
+	destroy(intarray);
 	return 0;
 }
 
 Intarray createintarray()
 {
-	int size = promptforsize();
+	int arraysize = promptforsize();
 	Intarray array = (int*)malloc(sizeof(int) * (size + 1));
-	array[0] = size;		/* storing size info */
+	array[0] = arraysize;		/* storing size info */
 	initarrayvalues(++array);	/* shifting pointer to element [1] */
 	return array;
 }
@@ -82,7 +83,7 @@ Intarray push(int valuetoadd, Intarray array)
 		i++;
 	}
 	newarray[i] = valuetoadd;
-	free(--array);
+	destroy(array);
 	return ++newarray;
 }
 
@@ -100,7 +101,7 @@ Intarray pop(int indextopop, Intarray array)
 		newarray[i] = array[i];
 		i++;
 	}
-	free(--array);
+	destroy(array);
 	return ++newarray;
 }
 
@@ -124,4 +125,9 @@ Intarray pushmultiple(Intarray valuestoadd, Intarray array)
 		array = push(valuestoadd[i], array);
 	}
 	return array;
+}
+
+void destroy(Intarray array)
+{
+	free(--array);
 }
