@@ -1,8 +1,9 @@
-SOURCEFILE = resizearr
-OUTPUTFILE = out
+MAIN = main
+FUNCTIONS = resizearr
+OUTPUT = out
 
-output: $(SOURCEFILE).c
-	gcc $(SOURCEFILE).c -o $(OUTPUTFILE)
+output: $(MAIN).c
+	gcc $(MAIN).c $(FUNCTIONS).c -o $(OUTPUT)
 
 clean:
-	rm $(OUTPUTFILE).*
+	rm $(OUTPUT).*
