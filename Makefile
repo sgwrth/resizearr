@@ -1,9 +1,9 @@
 MAIN = main
 FUNCTIONS = resizearr
-OUTPUT = out
+EXECUTABLE = a
 
-output: $(MAIN).c
-	gcc $(MAIN).c $(FUNCTIONS).c -o $(OUTPUT)
+$(EXECUTABLE): $(MAIN).o $(FUNCTIONS).o
+	gcc $(MAIN).o $(FUNCTIONS).o -o $(EXECUTABLE)
 
 clean:
-	rm $(OUTPUT).*
+	rm *.o *.s $(EXECUTABLE)
